@@ -1,0 +1,74 @@
+
+<app-product *ngIf="showForm" [categories]="categories" [product]="product" (saveEmitter)="saveProduct($event)" ></app-product>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" *ngIf="!showForm">
+        <button class="btn btn-primary mt-2" (click)="create()">New product</button>
+        <div class="display-6">
+            Registered products:
+        </div>
+        <div class="col-md-10 offset-md-1">
+            <table class="table" id="productsTable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col" class=" d-none d-md-table-cell">Description</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Category</th>
+                        <th scope="col" class=" d-none d-md-table-cell">Options</th>
+                        <th scope="col" class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of products;">
+                        <th scope="row">{{ product.id }}</th>
+                        <td>{{ product.name }}</td>
+                        <td class="d-none d-md-table-cell">{{ product.desc }}</td>
+                        <td>{{ product.price | currency: 'BRL' }}</td>
+                        <td>{{ product.category.name }}</td>
+                        <td>
+                            <span *ngIf="product.promotion" class="badge text-bg-success me-2">P</span> 
+                            <span *ngIf="product.novo" class="badge text-bg-primary">L</span>
+
+                        </td>
+                        <td class="text-end">
+                            <button class="btn p-1" (click)="edit(product)"><i class="bi bi-pencil"></i></button>
+                            <button class="btn p-1" (click)="deleteProduct(confirmModal, product)"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    <ng-template #confirmModal let-modal>
+        <div class="modal-header">
+            <h5 class="modal-title">Remove Product</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.close()"></button>
+          </div>
+          <div class="modal-body">
+            <p>Remove the product #{{product.id}}?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="modal.close(true)">Confirm</button>
+            <button type="button" class="btn btn-primary" (click)="modal.close()">Cancel</button>
+          </div>
+    </ng-template>
+    
+</body>
+</html>
+
+

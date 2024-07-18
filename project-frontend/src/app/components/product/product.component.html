@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <main class="container">
+        <section>
+            <div class="display-6">
+                Registration form:
+            </div>
+
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <form [formGroup]="formGroupProduct" #ngFormProduct="ngForm">
+
+                        <div *ngIf="product.id" class="row mb-3 mt-3">
+                            <label for="inputId" class="col-sm-2 col-form-label">Id:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="id" id="inputId" formControlName="id"> 
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3 mt-3">
+                            <label for="inputName" class="col-sm-2 col-form-label">Name:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="name" id="inputName" formControlName="name" > 
+                                <div *ngIf="ngFormProduct.submitted">
+                                    <small *ngIf="pfgName?.errors?.['required']" class="form-text text-danger">*Name is required!</small>
+                                    <small *ngIf="pfgName?.errors?.['minlength']" class="form-text text-danger">*Minimum length of 3 characters!</small>
+                                </div>
+                            </div>
+                            
+                        </div>
+        
+                        <div class="row mb-3 mt-3">
+                            <label for="inputDescription" class="col-sm-2 col-form-label">Description:</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="description" id="inputDescription" formControlName="desc">
+                                <div *ngIf="ngFormProduct.submitted">
+                                    <small *ngIf="pfgDesc?.errors?.['required']" class="form-text text-danger">*Description is required!</small>
+                                </div>
+                            </div> 
+                        </div>
+        
+                        <div class="row mb-3 mt-3">
+                            <label for="inputPrice" class="col-sm-2 col-form-label">Preço:</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="price" id="inputPrice" formControlName="price">
+                                <div *ngIf="ngFormProduct.submitted">
+                                    <small *ngIf="pfgPrice?.errors?.['required']" class="form-text text-danger">*Price is required!</small>
+                                </div>
+                            </div>
+                            <label for="selectCategory" class="col-sm-2 col-form-label">Category:</label>
+                            <div class="col-sm-4">
+                                <select class="form-select" 
+                                        aria-label="Selecione uma categoria"
+                                        name="category"
+                                        id="selectCategory" 
+                                        formControlName="category"
+                                        [compareWith]="selectedCategory"
+                                >
+                                    <option *ngFor="let cat of categories"  [ngValue]="cat">
+                                        {{cat.name}}
+                                    </option>
+                                </select>
+                                <div *ngIf="ngFormProduct.submitted">
+                                    <small *ngIf="pfgCat?.errors?.['required']" class="form-text text-danger">*Category is required!</small>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="row mb-3 mt-3">
+                            <label  class="col-sm-2 col-form-label">Options:</label>
+                            <div class="col-sm-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" name="promotion" id="checkBoxPromotion" formControlName="promotion">
+                                    <label class="form-check-label" for="checkBoxPromotion">
+                                        Promotion
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" name="newProduct" id="checkBoxNewProduct" formControlName="novo">
+                                    <label class="form-check-label" for="checkBoxNewProduct">
+                                        New
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3 mt-3">
+                            <div class="col-sm-4">
+                                <button type="submit" class="btn btn-success me-1" (click)="save()">Save</button>
+                                <button type="button" class="btn btn-danger" (click)="cancel()">Cancel</button>
+                            </div>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+
+
+
+</body>
+</html>
